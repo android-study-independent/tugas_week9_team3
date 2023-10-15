@@ -48,13 +48,8 @@ class PopularAdapter(private val listMoviePopular: List<MoviePopularResponse>) :
 
             val path = buildPosterPath(movie.posterPath)
 
-
-
             //load image from url
             Picasso.get().load(path).into(posterImage)
-
-            //gambar baru
-
 
         }
 
