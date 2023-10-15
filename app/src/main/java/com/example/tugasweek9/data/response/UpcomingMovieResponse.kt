@@ -1,4 +1,4 @@
-package com.example.tugasweek9.response
+package com.example.tugasweek9.data.response
 
 import android.os.Parcel
 import android.os.Parcelable
