@@ -15,9 +15,7 @@ interface Routes {
 
     @GET("movie/now_playing")
     suspend fun getNowPlaying(
-        @Header("Authorization") token: String,
-        @Query("language") lang: String,
+        @Query("language") lang: String = "en-US",
         @Query("page") page: Int
     ): NowPlayingResponse
-
 }
