@@ -1,7 +1,6 @@
 package com.example.tugasweek9.data.api
 
 import android.content.Context
-import com.chuckerteam.chucker.api.Chucker
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
@@ -12,7 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object Networking {
+object Network {
 
     private fun builder(context: Context): Retrofit {
 
@@ -24,12 +23,10 @@ object Networking {
             retentionPeriod = RetentionManager.Period.ONE_HOUR
         )
         val chuckerInterceptor = ChuckerInterceptor.Builder(context)
-
             .collector(chuckerCollector)
             .maxContentLength(250_000L)
             .createShortcut(true)
             .build()
-
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -39,12 +36,13 @@ object Networking {
             .readTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(HeaderInterceptor())
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(chuckerInterceptorgit)
+            .addInterceptor(chuckerInterceptor)
             .build()
 
         val gson = GsonBuilder().create()
 
-        return  Retrofit.Builder().baseUrl("https://api.themoviedb.org/3/")
+        return  Retrofit.Builder()
+            .baseUrl("https://api.themoviedb.org/3/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

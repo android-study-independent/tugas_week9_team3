@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.Date
 
 data class MoviePopularResponse(
-    val id: Int,
+    val id: Int?,
     @SerializedName("backdrop_path")
     val backdropPath: String?,
     @SerializedName("overview")
@@ -14,7 +14,7 @@ data class MoviePopularResponse(
     @SerializedName("poster_path")
     val posterPath: String?,
     @SerializedName("release_date")
-    val releaseDate: Date?,
+    val releaseDate: String?,
     @SerializedName("title")
     val title: String?,
     @SerializedName("vote_average")
