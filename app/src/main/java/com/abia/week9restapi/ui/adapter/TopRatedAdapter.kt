@@ -30,15 +30,14 @@ class TopRatedAdapter(private val listMovie: List<MovieResponse>) :
     inner class TopRatedHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bindView(movie: MovieResponse) {
-            //inisiasi view
             val imgPoster = view.findViewById<ImageView>(R.id.imgPoster)
             val tvTitle = view.findViewById<TextView>(R.id.tvTittle)
             val tvRating =view.findViewById<TextView>(R.id.tvRating)
             val tvOverview =view.findViewById<TextView>(R.id.tvOverview)
 
-            tvTitle.text = movie.tittle
+            tvTitle.text = movie.title
             tvRating.text = "${movie.voteAverage}"
-            tvOverview.text = movie.overview.toString()
+            tvOverview.text ="${movie.overview}"
 
 
             val path = buildPosterPath(movie.posterPath)
