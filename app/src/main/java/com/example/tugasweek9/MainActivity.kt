@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.lifecycle.lifecycleScope
-import com.example.tugasweek9.api.Network
+import com.example.tugasweek9.data.api.Network
 import com.example.tugasweek9.response.UpcomingMovieResponse
 import com.example.tugasweek9.response.UpcomingResponse
 import com.example.tugasweek9.ui.UpcomingMovie
