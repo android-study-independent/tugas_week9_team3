@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tugasweek9.R
-import com.example.tugasweek9.api.Network
+import com.example.tugasweek9.data.api.Network
 import com.example.tugasweek9.response.UpcomingMovieResponse
 import com.example.tugasweek9.ui.adapter.UpcomingAdapter
 import kotlinx.coroutines.launch
