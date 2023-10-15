@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TugasWeek9"
-include(":app")
+rootProject.name = "week9RestAPI"
+include ':app'

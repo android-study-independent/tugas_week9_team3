@@ -12,14 +12,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TugasWeek9"
+        android:theme="@style/Theme.Week9RestAPI"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".ui.NowPlaying"-->
-<!--            android:exported="false" />-->
         <activity
-            android:name=".ui.NowPlaying"
-            android:exported="true">
+            android:name=".ui.TopRated"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
