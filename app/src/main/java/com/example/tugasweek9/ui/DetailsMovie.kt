@@ -1,13 +1,11 @@
 package com.example.tugasweek9.ui
 
-import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.tugasweek9.R
-import com.example.tugasweek9.response.UpcomingMovieResponse
+import com.example.tugasweek9.data.response.UpcomingMovieResponse
 import com.squareup.picasso.Picasso
 
 class DetailsMovie : AppCompatActivity() {

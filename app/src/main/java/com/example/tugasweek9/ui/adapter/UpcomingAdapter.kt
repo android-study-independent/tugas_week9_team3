@@ -7,9 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tugasweek9.R
-import com.example.tugasweek9.response.UpcomingMovieResponse
+import com.example.tugasweek9.data.response.UpcomingMovieResponse
 import com.squareup.picasso.Picasso
-import java.nio.file.Path
 
 class UpcomingAdapter (private val listUpcoming: List<UpcomingMovieResponse>) : RecyclerView.Adapter<UpcomingAdapter.UpcomingMovieHolder>() {
 

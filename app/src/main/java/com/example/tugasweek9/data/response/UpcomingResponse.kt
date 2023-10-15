@@ -1,5 +1,6 @@
-package com.example.tugasweek9.response
+package com.example.tugasweek9.data.response
 
+import com.example.tugasweek9.data.response.UpcomingMovieResponse
 import com.google.gson.annotations.SerializedName
 
 data class UpcomingResponse (
