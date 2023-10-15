@@ -20,7 +20,7 @@ class DetailsMovie : AppCompatActivity() {
 
             val txtTitle : TextView = findViewById(R.id.txtTitleDetails)
             val txtDetailSinopsis:TextView = findViewById(R.id.txtDetailsSinopsis)
-            val releaseDate : TextView = findViewById(R.id.txtReleaseDateInDetails)
+            val releaseDate : TextView = findViewById(R.id.txtDateInDetails)
             val rating: TextView = findViewById(R.id.txtRatingInDetails)
             val imgBackdrop : ImageView = findViewById(R.id.imgBackdrop)
             val imgPoster : ImageView = findViewById(R.id.imgPoster)
