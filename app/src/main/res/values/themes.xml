@@ -1,9 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+<<<<<<< HEAD
+    <style name="Base.Theme.TugasWeek9" parent="Theme.Material3.DayNight.NoActionBar">
+=======
     <style name="Base.Theme.Week9RestAPI" parent="Theme.Material3.DayNight.NoActionBar">
+>>>>>>> 4d73787 (Saya baru saja membuat TopRated, tolong dikoreksi)
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+<<<<<<< HEAD
+    <style name="Theme.TugasWeek9" parent="Base.Theme.TugasWeek9" />
+=======
     <style name="Theme.Week9RestAPI" parent="Base.Theme.Week9RestAPI" />
+>>>>>>> 4d73787 (Saya baru saja membuat TopRated, tolong dikoreksi)
 </resources>

@@ -1,3 +1,7 @@
 <resources>
+<<<<<<< HEAD
+    <string name="app_name">TugasWeek9</string>
+=======
     <string name="app_name">week9RestAPI</string>
+>>>>>>> 4d73787 (Saya baru saja membuat TopRated, tolong dikoreksi)
 </resources>
