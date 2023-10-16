@@ -1,9 +1,12 @@
 package com.example.tugasweek9.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tugasweek9.R
 import com.example.tugasweek9.data.api.Network
 import com.example.tugasweek9.data.response.MoviePopularResponse
@@ -17,6 +20,19 @@ class PopularItemMovie : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_popular_item_movie)
+
+        val rvPopular = findViewById<RecyclerView>(R.id.rvPopular)
+        rvPopular.layoutManager = LinearLayoutManager(this)
+
+        adapter = PopularAdapter(listMoviePopular)
+        rvPopular.adapter = adapter
+
+        adapter.onItemClick = {
+            val intent = Intent(this@PopularItemMovie, DetailsMovie::class.java)
+            intent.putExtra("Popular", it)
+            startActivity(intent)
+        }
+
 
         lifecycleScope.launch {
             val result = Network.getService(this@PopularItemMovie).getPopular(
