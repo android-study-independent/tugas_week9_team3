@@ -33,9 +33,11 @@
         <activity
             android:name=".ui.UpcomingMovie"
             android:exported="false" />
+
         <activity
             android:name=".ui.NowPlaying"
             android:exported="false" />
+
         <activity
             android:name=".ui.TopRated"
             android:exported="false" />
