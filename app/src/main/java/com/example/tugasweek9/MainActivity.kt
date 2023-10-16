@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
                 page = 1
             )
 
+
+
+
             Log.d("Debug", "total page -> ${result.totalPage}")
 
             result.results.map {
