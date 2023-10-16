@@ -40,6 +40,7 @@ class PopularAdapter (private val listMoviePopular: List<MoviePopularResponse>) 
             val detail = view.findViewById<TextView>(R.id.textIcnDetail)
 
 
+
             title.text = movie.title
             textrate.text = "${movie.voteAverage}"
             overview.text = movie.overview

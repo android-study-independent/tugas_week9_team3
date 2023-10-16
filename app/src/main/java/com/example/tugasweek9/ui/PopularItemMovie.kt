@@ -30,6 +30,8 @@ class PopularItemMovie : AppCompatActivity() {
                 listMoviePopular.add(it)
             }
 
+
+
             adapter.notifyDataSetChanged()
         }
     }
