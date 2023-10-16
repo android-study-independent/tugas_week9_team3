@@ -136,7 +136,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvPopularity"
             />
 
-        // INI IMAGE ARROW RIGHT NYA
+
         <ImageView
             android:id="@+id/imgArrowRight"
             android:layout_width="18dp"

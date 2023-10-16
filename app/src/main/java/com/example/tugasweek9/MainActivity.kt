@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.tugasweek9.data.api.Network
 import com.example.tugasweek9.data.response.UpcomingMovieResponse
 import com.example.tugasweek9.ui.NowPlaying
+import com.example.tugasweek9.ui.TopRated
 import com.example.tugasweek9.ui.UpcomingMovie
 import kotlinx.coroutines.launch
 
@@ -51,6 +52,12 @@ class MainActivity : AppCompatActivity() {
 
         btnUpcoming.setOnClickListener {
             val intent = Intent(this, UpcomingMovie::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        btnTopRated.setOnClickListener {
+            val intent = Intent(this, TopRated::class.java)
             startActivity(intent)
             finish()
         }
