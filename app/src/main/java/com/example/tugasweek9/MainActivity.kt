@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.tugasweek9.data.api.Network
 import com.example.tugasweek9.data.response.UpcomingMovieResponse
 import com.example.tugasweek9.ui.NowPlaying
+import com.example.tugasweek9.ui.PopularItemMovie
 import com.example.tugasweek9.ui.TopRated
 import com.example.tugasweek9.ui.UpcomingMovie
 import kotlinx.coroutines.launch
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
+        btnPopular.setOnClickListener {
+            val intent = Intent(this, PopularItemMovie::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
 }

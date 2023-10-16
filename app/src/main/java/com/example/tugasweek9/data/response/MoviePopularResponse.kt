@@ -16,7 +16,7 @@ data class MoviePopularResponse(
     @SerializedName("poster_path")
     val posterPath: String?,
     @SerializedName("release_date")
-    val releaseDate: Date?,
+    val releaseDate: String?,
     @SerializedName("title")
     val title: String?,
     @SerializedName("vote_average")
@@ -30,7 +30,7 @@ data class MoviePopularResponse(
         parcel.readString(),
         parcel.readValue(Float::class.java.classLoader) as? Float,
         parcel.readString(),
-        TODO("releaseDate"),
+        parcel.readString(),
         parcel.readString(),
         parcel.readValue(Float::class.java.classLoader) as? Float
     ) {
@@ -42,6 +42,7 @@ data class MoviePopularResponse(
         parcel.writeString(overview)
         parcel.writeValue(popularity)
         parcel.writeString(posterPath)
+        parcel.writeString(releaseDate)
         parcel.writeString(title)
         parcel.writeValue(voteAverage)
     }
