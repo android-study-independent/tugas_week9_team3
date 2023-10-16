@@ -34,7 +34,10 @@
             android:exported="false" />
         <activity
             android:name=".ui.NowPlaying"
-            android:exported="false"/>
+            android:exported="false" />
+        <activity
+            android:name=".ui.TopRated"
+            android:exported="false" />
     </application>
 
 </manifest>

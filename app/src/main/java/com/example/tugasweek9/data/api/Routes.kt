@@ -2,6 +2,7 @@ package com.example.tugasweek9.data.api
 
 import com.example.tugasweek9.data.response.NowPlayingResponse
 import com.example.tugasweek9.data.response.PopularResponse
+import com.example.tugasweek9.data.response.TopRatedResponse
 import com.example.tugasweek9.data.response.UpcomingResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -24,6 +25,12 @@ interface Routes {
         @Query("language") lang: String = "en-EN",
         @Query("page") page: Int
     ): UpcomingResponse
+
+    @GET("movie/top_rated")
+    suspend fun getTopRated(
+        @Query("languague")lang:String = "en_EN",
+        @Query("page") page:Int
+    ): TopRatedResponse
 
 
 }
