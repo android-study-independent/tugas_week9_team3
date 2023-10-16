@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tugasweek9.R
 import com.example.tugasweek9.data.response.MovieResponse
+import com.example.tugasweek9.data.response.UpcomingMovieResponse
 import com.squareup.picasso.Picasso
 
 class NowPlayingAdapter(val listMovie: List<MovieResponse>) : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingHolder>() {
@@ -24,9 +25,15 @@ class NowPlayingAdapter(val listMovie: List<MovieResponse>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: NowPlayingHolder, position: Int) {
+        val itemMovie = listMovie[position]
         holder.bindView(listMovie[position])
+
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(itemMovie)
+        }
     }
 
+    var onItemClick : ((MovieResponse) -> Unit)? = null
 
     inner class NowPlayingHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 

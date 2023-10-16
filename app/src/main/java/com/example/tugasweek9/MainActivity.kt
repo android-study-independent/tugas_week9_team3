@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import com.example.tugasweek9.data.api.Network
 import com.example.tugasweek9.data.response.UpcomingMovieResponse
+import com.example.tugasweek9.ui.NowPlaying
 import com.example.tugasweek9.ui.UpcomingMovie
 import kotlinx.coroutines.launch
 
@@ -42,6 +43,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        btnNowPlaying.setOnClickListener{
+            val intent = Intent(this, NowPlaying::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         btnUpcoming.setOnClickListener {
             val intent = Intent(this, UpcomingMovie::class.java)

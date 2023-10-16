@@ -1,5 +1,7 @@
 package com.example.tugasweek9.data.response
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 // MENGIDENTIFIKASI DIDALAM DATA OBJECTNYA ATAU MENDFINISIKAN KEY NYA.
@@ -28,4 +30,43 @@ data class MovieResponse(
     val title: String?,
     @SerializedName("vote_average")
     val voteAverage: Float?
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Float::class.java.classLoader) as? Float,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Float::class.java.classLoader) as? Float
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(backdropPath)
+        parcel.writeValue(id)
+        parcel.writeString(originalTitle)
+        parcel.writeString(overview)
+        parcel.writeValue(popularity)
+        parcel.writeString(posterPath)
+        parcel.writeString(releaseDate)
+        parcel.writeString(title)
+        parcel.writeValue(voteAverage)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MovieResponse> {
+        override fun createFromParcel(parcel: Parcel): MovieResponse {
+            return MovieResponse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MovieResponse?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
