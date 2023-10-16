@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso
 class TopRatedAdapter(private val listMovie: List<MovieTopRatedResponse>) :
     RecyclerView.Adapter<TopRatedAdapter.TopRatedHolder>() {
 
+    var onItemClick: ((MovieTopRatedResponse) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopRatedHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_top_rated, parent, false)
@@ -22,28 +24,28 @@ class TopRatedAdapter(private val listMovie: List<MovieTopRatedResponse>) :
     }
 
     override fun onBindViewHolder(holder: TopRatedHolder, position: Int) {
-        val itemMovie = listMovie[position]
+        val itemTopRatedMovie = listMovie[position]
         holder.bindView(listMovie[position])
 
         holder.itemView.setOnClickListener {
-            onItemClick?.invoke(itemMovie)
+            onItemClick?.invoke(itemTopRatedMovie)
         }
     }
 
-    var onItemClick: ((MovieTopRatedResponse) -> Unit)? = null
+
 
     inner class TopRatedHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bindView(movie: MovieTopRatedResponse) {
             // Initialization of views
-            val imgPoster = view.findViewById<ImageView>(R.id.imgPoster)
-            val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
-            val tvRating = view.findViewById<TextView>(R.id.tvRating)
-            val tvOverview = view.findViewById<TextView>(R.id.tvOverview)
+            val imgPoster = view.findViewById<ImageView>(R.id.imgPosterTopRated)
+            val tvTitle = view.findViewById<TextView>(R.id.tvTittleTopRated)
+            val tvRating = view.findViewById<TextView>(R.id.tvRatingTopRated)
+            val tvOverview = view.findViewById<TextView>(R.id.tvOverviewTopRated)
 
             tvTitle.text = movie.title
-            tvRating.text = "${movie.voteAverage}"
-            tvOverview.text = "${movie.overview}"
+            tvRating.text = movie.voteAverage.toString()
+            tvOverview.text = movie.overview.toString()
             val path = buildPosterPath(movie.posterPath)
 
             // Load an image from a URL into ImageView

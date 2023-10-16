@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class TopRated : AppCompatActivity() {
 
     private lateinit var adapter: TopRatedAdapter
-    private var listMovie = mutableListOf<MovieTopRatedResponse>() // Change the type to MovieTopRatedResponse
+    private var listMovieTopRated = mutableListOf<MovieTopRatedResponse>() // Change the type to MovieTopRatedResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +25,12 @@ class TopRated : AppCompatActivity() {
         val rvTopRated = findViewById<RecyclerView>(R.id.rvTopRated)
         rvTopRated.layoutManager = LinearLayoutManager(this)
 
-        adapter = TopRatedAdapter(listMovie)
+        adapter = TopRatedAdapter(listMovieTopRated)
         rvTopRated.adapter = adapter
 
         adapter.onItemClick = {
             val intent = Intent(this@TopRated, DetailsMovie::class.java)
-            intent.putExtra("Top Rated","String")
+            intent.putExtra("Top Rated",it)
             startActivity(intent)
         }
 
@@ -42,9 +42,9 @@ class TopRated : AppCompatActivity() {
 
             Log.d("debug", "total page -> ${result.totalPages}")
 
-            result.result.map {
+            result.results.map {
                 Log.d("debug", "hasilnya -> ${it.title} - ${it.overview}")
-                listMovie.add(it)
+                listMovieTopRated.add(it)
             }
 
             // Update the RecyclerView
