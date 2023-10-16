@@ -1,5 +1,6 @@
 package com.example.tugasweek9.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -29,6 +30,12 @@ class NowPlaying : AppCompatActivity() {
         adapter = NowPlayingAdapter(listMovie)
         rvNowPlaying.adapter = adapter
 
+        adapter.onItemClick = {
+            val intent = Intent(this@NowPlaying, DetailsMovie::class.java)
+            intent.putExtra("Now Playing", it)
+            startActivity(intent)
+        }
+
         lifecycleScope.launch {
 
             val result = Network.getService(this@NowPlaying).getNowPlaying(
@@ -48,3 +55,5 @@ class NowPlaying : AppCompatActivity() {
         }
     }
 }
+
+
