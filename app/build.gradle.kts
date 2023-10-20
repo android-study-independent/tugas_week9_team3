@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("com.google.gms.google-services")
+//    id ("com.google.gms.google-services' version '4.4.0' apply false")
 }
 
 android {
@@ -55,4 +57,7 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
 
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+
+    implementation ("com.google.firebase:firebase-bom:32.3.1")
+    implementation ("com.google.firebase:firebase-analytics-ktx")
 }
