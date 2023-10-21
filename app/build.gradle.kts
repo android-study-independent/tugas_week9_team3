@@ -58,6 +58,6 @@ dependencies {
 
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
 
-    implementation ("com.google.firebase:firebase-bom:32.3.1")
+    implementation (platform("com.google.firebase:firebase-bom:32.4.0"))
     implementation ("com.google.firebase:firebase-analytics-ktx")
 }
