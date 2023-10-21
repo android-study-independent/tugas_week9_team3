@@ -12,6 +12,10 @@ import com.example.tugasweek9.ui.NowPlaying
 import com.example.tugasweek9.ui.PopularItemMovie
 import com.example.tugasweek9.ui.TopRated
 import com.example.tugasweek9.ui.UpcomingMovie
+import com.example.tugasweek9.ui.activities.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -22,10 +26,23 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnUpcoming: Button
     private var upcomingMovie = mutableListOf<UpcomingMovieResponse>()
 
+    // kiki nambahin private auth : firebaseauth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // kiki nambahin button signut disini yaa
+        auth = Firebase.auth
+        val btnSignout = findViewById<Button>(R.id.btnSignout)
+        btnSignout.setOnClickListener {
+            if (auth.currentUser != null) {
+                auth.signOut()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }
 
         btnNowPlaying = findViewById(R.id.btnNowPlaying)
         btnPopular = findViewById(R.id.btnPopular)
