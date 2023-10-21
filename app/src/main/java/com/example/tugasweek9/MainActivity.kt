@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnTopRated.setOnClickListener {
-            val intent = Intent(this, TopRated::class.java)
+            val intent = Intent(this, SingWithGoogle::class.java)
             startActivity(intent)
             finish()
         }
