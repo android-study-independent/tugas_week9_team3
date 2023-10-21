@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "404001316039",
+    "project_id": "msib-thepresident",
+    "storage_bucket": "msib-thepresident.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404001316039:android:02719221d3b70be7c272e2",
+        "android_client_info": {
+          "package_name": "com.example.tugasweek9"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404001316039-38a3hmqecko7ohf587ie4fiole5vf7ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tugasweek9",
+            "certificate_hash": "c906498e37331063434352e7aec84211e0460ff2"
+          }
+        },
+        {
+          "client_id": "404001316039-nkmmv2117nte3h9dnqh71kg8td5ep6kl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tugasweek9",
+            "certificate_hash": "e4cf4c3da8f25c9e546454f589b3710af5f327f6"
+          }
+        },
+        {
+          "client_id": "404001316039-sjp6s7rsisto78egrb38vvnu0ana3dp5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tugasweek9",
+            "certificate_hash": "c6d2ba14df25e1d796cb91a669aeaa1d96c08306"
+          }
+        },
+        {
+          "client_id": "404001316039-emen3eq1bel7mt8o97demmge74vmov39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4EGbGY4YuU1Hjw5Sr4QrUkS5MteF4lpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "404001316039-emen3eq1bel7mt8o97demmge74vmov39.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
