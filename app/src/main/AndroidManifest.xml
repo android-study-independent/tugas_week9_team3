@@ -56,7 +56,8 @@
             android:exported="false" />
         <activity
             android:name=".SingWithGoogle"
-            android:exported="false" />
+            android:exported="false" >
+        </activity>
     </application>
 
 </manifest>
