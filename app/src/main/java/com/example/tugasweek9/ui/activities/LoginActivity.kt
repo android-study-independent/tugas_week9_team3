@@ -3,19 +3,32 @@ package com.example.tugasweek9.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.tugasweek9.MainActivity
 import com.example.tugasweek9.R
+import com.example.tugasweek9.SingWithGoogle
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
+
+    companion object
+    {val RC_GOOGLE_SINGIN = 1}
 
     //menambahkan code untuk analytic
 
@@ -38,8 +51,20 @@ class LoginActivity : BaseActivity() {
             loginUser()
         }
 
+
         // ini menuju ke action login Google yaaa
-        // btw ini itu belum di isi yaa
+        val btnGoogle = findViewById<SignInButton>(R.id.btnGoogle)
+        btnGoogle.setOnClickListener {
+            val singInIntent = googleSignInClient.signInIntent
+            startActivityForResult(singInIntent, RC_GOOGLE_SINGIN)
+        }
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.webclient_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+
 
         // ini menuju ke halaman RegisterActivity yaa
         val txtRegister = findViewById<TextView>(R.id.txtRegister)
@@ -51,12 +76,53 @@ class LoginActivity : BaseActivity() {
 
         // inisiasi firebase nya
         auth = Firebase.auth
-//        if (auth.currentUser!= null) {
-//            startActivity(Intent(this, LoginActivity::class.java))
-//            finish()
-//        }
     }
 
+
+    // ini login with google yaa
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == SingWithGoogle.RC_GOOGLE_SINGIN) {
+
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d("nabila_tag", "firebaseAuthWithGoogle: ${account.idToken}")
+
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException){
+                Log.e("nabila_tag", "error -> ${e.localizedMessage}")
+
+            }
+        }
+    }
+    private fun firebaseAuthWithGoogle(idToken: String?) {
+        Log.d("nabila_tag", "token -> $idToken")
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d("nabila_tag", "singInWithCredential:success")
+                    val user = auth.currentUser
+                    Toast.makeText(
+                        this,
+                        "Berhasil Sign In ${user?.displayName}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    // redirect ke halaman mainactivity
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Log.w("nabila_tag","singInWithCredential:failure", task.exception)
+                    Toast.makeText(this, "Gagal Sign In", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+    }
+
+    // ini login with user biasa
     private fun loginUser() {
         val inputEmail = findViewById<TextInputLayout>(R.id.inputEmail).editText?.text.toString()
         val inputPassword =
