@@ -80,6 +80,8 @@ class SingWithGoogle : AppCompatActivity() {
                         "Berhasil Sign In ${user?.displayName}",
                         Toast.LENGTH_SHORT).show()
 
+                    //tambahan di bagian signwith google
+
                 } else {
                     Log.w("nabila_tag","singInWithCredential:failure", task.exception)
                     Toast.makeText(this, "Gagal Sign In", Toast.LENGTH_SHORT).show()
