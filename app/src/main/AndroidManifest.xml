@@ -33,7 +33,6 @@
         <activity
             android:name=".ui.UpcomingMovie"
             android:exported="false" />
-
         <activity
             android:name=".ui.NowPlaying"
             android:exported="false" />
@@ -43,7 +42,8 @@
             android:exported="false" />
         <activity
             android:name=".SingWithGoogle"
-            android:exported="false" />
+            android:exported="false" >
+        </activity>
     </application>
 
 </manifest>

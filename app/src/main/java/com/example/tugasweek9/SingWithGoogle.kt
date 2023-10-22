@@ -63,6 +63,7 @@ class SingWithGoogle : AppCompatActivity() {
                 Log.e("nabila_tag", "error -> ${e.localizedMessage}")
 
             }
+
         }
     }
 
@@ -77,9 +78,8 @@ class SingWithGoogle : AppCompatActivity() {
                     Toast.makeText(
                         this,
                         "Berhasil Sign In ${user?.displayName}",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                        Toast.LENGTH_SHORT).show()
+
                 } else {
                     Log.w("nabila_tag","singInWithCredential:failure", task.exception)
                     Toast.makeText(this, "Gagal Sign In", Toast.LENGTH_SHORT).show()
