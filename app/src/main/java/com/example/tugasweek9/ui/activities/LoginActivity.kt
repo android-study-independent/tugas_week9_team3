@@ -17,6 +17,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -27,15 +28,26 @@ class LoginActivity : BaseActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    // analytic
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     companion object
     {val RC_GOOGLE_SINGIN = 1}
 
-    //menambahkan code untuk analytic
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        //analityc 1
+//        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
+//            params(FirebaseAnalytics.Param.ITEM_ID,"ffDBEnWHRdUXfh0KLfn4o5dnRnL2")
+//            params(FirebaseAnalytics.Param.ITEM_NAME,"TEST")
+//        }
+
 
         // ini menuju ke halaman ForgotPasswordActivity yaa
         val txtForgotPassword = findViewById<TextView>(R.id.txtForgotPassword)
@@ -49,6 +61,10 @@ class LoginActivity : BaseActivity() {
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         btnLogin.setOnClickListener {
             loginUser()
+            //analityc Login USERPASS
+//            val bundle = Bundle()
+//            bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
+//            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
         }
 
 
@@ -78,6 +94,10 @@ class LoginActivity : BaseActivity() {
         auth = Firebase.auth
     }
 
+    private fun params(itemId: String, s: String) {
+
+    }
+
 
     // ini login with google yaa
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -105,6 +125,14 @@ class LoginActivity : BaseActivity() {
                 if (task.isSuccessful) {
                     Log.d("nabila_tag", "singInWithCredential:success")
                     val user = auth.currentUser
+//                    //analityc 2
+//                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN){
+//                        params(FirebaseAnalytics.Param.METHOD,"google")
+//                    }
+                    //analityc Login GOOGLE
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
                     Toast.makeText(
                         this,
                         "Berhasil Sign In ${user?.displayName}",
