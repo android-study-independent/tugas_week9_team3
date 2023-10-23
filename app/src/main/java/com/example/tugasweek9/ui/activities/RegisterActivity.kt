@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.example.tugasweek9.MainActivity
 import com.example.tugasweek9.R
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -15,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 class RegisterActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,11 @@ class RegisterActivity : BaseActivity() {
         val btnRegister =  findViewById<Button>(R.id.btnRegister)
         btnRegister.setOnClickListener {
             registerUser()
+// analityc 1
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.METHOD, "Register")
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
+
         }
 
         // ini menuju ke halaman LoginActivity yaaa
