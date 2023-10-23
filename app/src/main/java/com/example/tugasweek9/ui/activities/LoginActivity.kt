@@ -77,9 +77,9 @@ class LoginActivity : BaseActivity() {
 //            }
 //            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
            // analityc Login USERPASS
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
-            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+//            val bundle = Bundle()
+//            bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
+//            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
             //analityc 2.2
         }
 
