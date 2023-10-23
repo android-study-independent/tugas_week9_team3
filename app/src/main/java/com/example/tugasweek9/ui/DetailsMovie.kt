@@ -200,6 +200,7 @@ class DetailsMovie : AppCompatActivity() {
         hashMap["Title Movie Top Rated"] = movieTopRated
         hashMap["Title Movie Upcoming"] = movieUpcoming
         hashMap["Title Movie Popular"] = moviePopular
+
         hashMap["Timestamp"] = timestamp
 
         val refDb = FirebaseDatabase.getInstance().getReference("Users")
