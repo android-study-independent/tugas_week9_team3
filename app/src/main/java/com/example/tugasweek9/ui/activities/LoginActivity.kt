@@ -39,6 +39,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
@@ -60,13 +61,19 @@ class LoginActivity : BaseActivity() {
         // ini action button login yaa
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         btnLogin.setOnClickListener {
+
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "123")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "Test Item")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
+            }
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
             loginUser()
             //analityc Login USERPASS
 //            val bundle = Bundle()
 //            bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
 //            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
         }
-
 
         // ini menuju ke action login Google yaaa
         val btnGoogle = findViewById<SignInButton>(R.id.btnGoogle)
@@ -150,7 +157,6 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    // ini login with user biasa
     private fun loginUser() {
         val inputEmail = findViewById<TextInputLayout>(R.id.inputEmail).editText?.text.toString()
         val inputPassword =

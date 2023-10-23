@@ -13,6 +13,7 @@ import com.example.tugasweek9.data.response.MoviePopularResponse
 import com.example.tugasweek9.data.response.MovieResponse
 import com.example.tugasweek9.data.response.MovieTopRatedResponse
 import com.example.tugasweek9.data.response.UpcomingMovieResponse
+import com.example.tugasweek9.ui.adapter.UpcomingAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,7 +26,9 @@ import retrofit2.http.Tag
 class DetailsMovie : AppCompatActivity() {
 
     private var movieNowPlaying = ""
+    private var movieUpcoming2 = mutableListOf<UpcomingMovieResponse>()
     private var movieUpcoming = ""
+    private lateinit var adapter: UpcomingAdapter
     private var movieTopRated = ""
     private var moviePopular = ""
     private lateinit var firebaseAuth: FirebaseAuth
@@ -40,6 +43,8 @@ class DetailsMovie : AppCompatActivity() {
         val getDataNowPlayingMovie = intent.getParcelableExtra<MovieResponse>("Now Playing")
         val getTopRatedMovie = intent.getParcelableExtra<MovieTopRatedResponse>("Top Rated")
         val getPopularMovie = intent.getParcelableExtra<MoviePopularResponse>("Popular")
+
+        adapter = UpcomingAdapter(movieUpcoming2)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -162,7 +167,7 @@ class DetailsMovie : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("Users")
 
         ref.child(firebaseAuth.uid!!).child("Favorite").child(movieNowPlaying)
-            .addValueEventListener(object : ValueEventListener{
+            .addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     isMyFav = snapshot.exists()
                     if (isMyFav) {
@@ -187,14 +192,14 @@ class DetailsMovie : AppCompatActivity() {
     }
 
     private fun addFavorite () {
-        Log.d(TAG, "Add to favirite")
+        Log.d(TAG, "Add to favorite")
         val timestamp = System.currentTimeMillis()
 
         val hashMap = HashMap<String, Any>()
-//        hashMap["NowPlaying"] = movieNowPlaying
-//        hashMap["TopRated"] = movieTopRated
-        hashMap["Upcoming"] = movieUpcoming
-//        hashMap["Popular"] = moviePopular
+        hashMap["Title Movie Now Playing"] = movieNowPlaying
+        hashMap["Title Movie Top Rated"] = movieTopRated
+        hashMap["Title Movie Upcoming"] = movieUpcoming
+        hashMap["Title Movie Popular"] = moviePopular
         hashMap["Timestamp"] = timestamp
 
         val refDb = FirebaseDatabase.getInstance().getReference("Users")
@@ -215,7 +220,7 @@ class DetailsMovie : AppCompatActivity() {
     }
 
     private fun removeFavorite() {
-        Log.d(TAG, "Remove from favvorite")
+        Log.d(TAG, "Remove from favorite")
 
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.child(firebaseAuth.uid!!).child("Favorite").child(movieNowPlaying)
