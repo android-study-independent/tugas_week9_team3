@@ -61,10 +61,18 @@ class LoginActivity : BaseActivity() {
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         btnLogin.setOnClickListener {
             loginUser()
-            //analityc Login USERPASS
-//            val bundle = Bundle()
-//            bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
-//            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+
+//            val bundle = Bundle().apply {
+//                putString(FirebaseAnalytics.Param.ITEM_ID, "123")
+//                putString(FirebaseAnalytics.Param.ITEM_NAME, "Test Item")
+//                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
+//            }
+//            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+           // analityc Login USERPASS
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+            //analityc 2.2
         }
 
 
@@ -73,6 +81,19 @@ class LoginActivity : BaseActivity() {
         btnGoogle.setOnClickListener {
             val singInIntent = googleSignInClient.signInIntent
             startActivityForResult(singInIntent, RC_GOOGLE_SINGIN)
+
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.ITEM_ID, "123")
+                putString(FirebaseAnalytics.Param.ITEM_NAME, "Test Item")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
+            }
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
+            //Analytic debugview
+//            val bundle = Bundle()
+//            bundle.putString("loginGoogle","Login Google")
+//            firebaseAnalytics.logEvent("login_google", bundle)
+
         }
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.webclient_id))
@@ -125,14 +146,17 @@ class LoginActivity : BaseActivity() {
                 if (task.isSuccessful) {
                     Log.d("nabila_tag", "singInWithCredential:success")
                     val user = auth.currentUser
-//                    //analityc 2
+
+                    Toast.makeText(this, "berhasil regist", Toast.LENGTH_SHORT).show()
+//                    //analityc 2.1
 //                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN){
 //                        params(FirebaseAnalytics.Param.METHOD,"google")
-//                    }
-                    //analityc Login GOOGLE
-                    val bundle = Bundle()
-                    bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+//                  }
+//                    //analityc Login GOOGLE
+//                    val bundle = Bundle()
+//                    bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
+//                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+
                     Toast.makeText(
                         this,
                         "Berhasil Sign In ${user?.displayName}",
