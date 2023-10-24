@@ -21,6 +21,11 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : BaseActivity() {
@@ -41,7 +46,7 @@ class LoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
 
         //analityc 1
 //        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM){
@@ -76,7 +81,7 @@ class LoginActivity : BaseActivity() {
 //                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
 //            }
 //            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-           // analityc Login USERPASS
+            // analityc Login USERPASS
 //            val bundle = Bundle()
 //            bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
 //            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
@@ -164,6 +169,7 @@ class LoginActivity : BaseActivity() {
 //                    bundle.putString(FirebaseAnalytics.Param.METHOD, "userpass")
 //                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
 
+                    handleLogin()
                     Toast.makeText(
                         this,
                         "Berhasil Sign In ${user?.displayName}",
@@ -173,6 +179,7 @@ class LoginActivity : BaseActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
+                    saveUserDataToFirestore(user?.uid ?: "", user?.email ?: "")
                 } else {
                     Log.w("nabila_tag","singInWithCredential:failure", task.exception)
                     Toast.makeText(this, "Gagal Sign In", Toast.LENGTH_SHORT).show()
@@ -203,9 +210,11 @@ class LoginActivity : BaseActivity() {
                     if (task.isSuccessful)
                     {
                         showToast(this, "Berhasil Login, yeayy!")
+                        handleLogin()
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                         hideProgressBar()
+                        saveUserDataToFirestore(auth.currentUser?.uid ?: "", inputEmail)
                     } else {
                         showToast(this, "Tidak bisa login!")
                         hideProgressBar()
@@ -235,4 +244,60 @@ class LoginActivity : BaseActivity() {
             else -> true
         }
     }
+
+    private fun handleLogin() {
+        // Your existing login code...
+
+        // After the user is logged in:
+        val userId = auth.uid
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+
+        ref.child(userId!!).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (!snapshot.exists()) {
+                    // The user is logging in for the first time, create the default data structure
+                    val defaultData = mapOf(
+                        "favorites" to mapOf(
+                            "Now Playing" to mapOf("null" to true),
+                            // Add other categories here...
+                        )
+                    )
+                    ref.child(userId).setValue(defaultData)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error...
+            }
+        })
+    }
+    private fun saveUserDataToFirestore(userId: String, email: String) {
+        // Access the Firestore instance
+        val db = FirebaseFirestore.getInstance()
+
+        // Define the data you want to save to Firestore
+        val userData = hashMapOf(
+            "userId" to userId,
+            "email" to email
+            // Add more fields as needed
+        )
+
+        // Specify the Firestore collection and document where you want to store the data
+        val userCollection = db.collection("login")
+        val userDocument = userCollection.document(userId) // You can use the user's unique ID as the document ID
+
+        // Add the data to Firestore
+        userDocument.set(userData)
+            .addOnSuccessListener {
+                // Data has been successfully saved to Firestore
+                // You can perform any additional actions or navigate to the main activity here
+                showToast(this, "Data saved to Firestore")
+            }
+            .addOnFailureListener { e ->
+                // Handle the error if the data couldn't be saved
+                showToast(this, "Error saving data to Firestore: ${e.message}")
+            }
+    }
+
+
 }
