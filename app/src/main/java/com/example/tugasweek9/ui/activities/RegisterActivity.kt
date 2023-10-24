@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : BaseActivity() {
@@ -27,9 +28,9 @@ class RegisterActivity : BaseActivity() {
         btnRegister.setOnClickListener {
             registerUser()
 // analityc 1
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.METHOD, "Register")
-            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
+//            val bundle = Bundle()
+//            bundle.putString(FirebaseAnalytics.Param.METHOD, "Register")
+//            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
 
         }
 
@@ -74,6 +75,7 @@ class RegisterActivity : BaseActivity() {
                         hideProgressBar()
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
+                        saveUserDataToFirestore(auth.currentUser?.uid ?: "", inputEmail)
                     } else {
                         showToast(this, "user id not created")
                         hideProgressBar()
@@ -110,4 +112,33 @@ class RegisterActivity : BaseActivity() {
             else -> true
         }
     }
+
+    private fun saveUserDataToFirestore(userId: String, email: String) {
+        // Access the Firestore instance
+        val db = FirebaseFirestore.getInstance()
+
+        // Define the data you want to save to Firestore
+        val userData = hashMapOf(
+            "userId" to userId,
+            "email" to email
+            // Add more fields as needed
+        )
+
+        // Specify the Firestore collection and document where you want to store the data
+        val userCollection = db.collection("register")
+        val userDocument = userCollection.document(userId) // You can use the user's unique ID as the document ID
+
+        // Add the data to Firestore
+        userDocument.set(userData)
+            .addOnSuccessListener {
+                // Data has been successfully saved to Firestore
+                // You can perform any additional actions or navigate to the main activity here
+                showToast(this, "Data saved to Firestore")
+            }
+            .addOnFailureListener { e ->
+                // Handle the error if the data couldn't be saved
+                showToast(this, "Error saving data to Firestore: ${e.message}")
+            }
+    }
+
 }

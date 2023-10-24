@@ -59,13 +59,13 @@ class DetailsMovie : AppCompatActivity() {
         movieTopRated = intent.getParcelableExtra<MovieTopRatedResponse>("Top Rated").toString()
 
         if (getDataUpcomingMovie != null) {
-            val txtTitle : TextView = findViewById(R.id.txtTitleDetails)
-            val txtDetailSinopsis:TextView = findViewById(R.id.txtDetailsSinopsis)
-            val releaseDate : TextView = findViewById(R.id.txtDateInDetails)
+            val txtTitle: TextView = findViewById(R.id.txtTitleDetails)
+            val txtDetailSinopsis: TextView = findViewById(R.id.txtDetailsSinopsis)
+            val releaseDate: TextView = findViewById(R.id.txtDateInDetails)
             val rating: TextView = findViewById(R.id.txtRatingInDetails)
-            val imgBackdrop : ImageView = findViewById(R.id.imgBackdrop)
-            val imgPoster : ImageView = findViewById(R.id.imgPoster)
-            val popularity : TextView = findViewById(R.id.numbersPopularity)
+            val imgBackdrop: ImageView = findViewById(R.id.imgBackdrop)
+            val imgPoster: ImageView = findViewById(R.id.imgPoster)
+            val popularity: TextView = findViewById(R.id.numbersPopularity)
 
             txtTitle.text = getDataUpcomingMovie.title
             txtDetailSinopsis.text = getDataUpcomingMovie.overview
@@ -77,15 +77,14 @@ class DetailsMovie : AppCompatActivity() {
             val path = buildPosterUpcoming(getDataUpcomingMovie.posterPath)
             Picasso.get().load(pathBackdrop).into(imgBackdrop)
             Picasso.get().load(path).into(imgPoster)
-        }
-        else if (getDataNowPlayingMovie != null){
-            val txtTitle : TextView = findViewById(R.id.txtTitleDetails)
-            val txtDetailSinopsis:TextView = findViewById(R.id.txtDetailsSinopsis)
-            val releaseDate : TextView = findViewById(R.id.txtDateInDetails)
+        } else if (getDataNowPlayingMovie != null) {
+            val txtTitle: TextView = findViewById(R.id.txtTitleDetails)
+            val txtDetailSinopsis: TextView = findViewById(R.id.txtDetailsSinopsis)
+            val releaseDate: TextView = findViewById(R.id.txtDateInDetails)
             val rating: TextView = findViewById(R.id.txtRatingInDetails)
-            val imgBackdrop : ImageView = findViewById(R.id.imgBackdrop)
-            val imgPoster : ImageView = findViewById(R.id.imgPoster)
-            val popularity : TextView = findViewById(R.id.numbersPopularity)
+            val imgBackdrop: ImageView = findViewById(R.id.imgBackdrop)
+            val imgPoster: ImageView = findViewById(R.id.imgPoster)
+            val popularity: TextView = findViewById(R.id.numbersPopularity)
 
             txtTitle.text = getDataNowPlayingMovie.title
             txtDetailSinopsis.text = getDataNowPlayingMovie.overview
@@ -97,15 +96,14 @@ class DetailsMovie : AppCompatActivity() {
             val path = buildPosterUpcoming(getDataNowPlayingMovie.posterPath)
             Picasso.get().load(pathBackdrop).into(imgBackdrop)
             Picasso.get().load(path).into(imgPoster)
-        }
-        else if (getTopRatedMovie != null) {
-            val txtTitle : TextView = findViewById(R.id.txtTitleDetails)
-            val txtDetailSinopsis:TextView = findViewById(R.id.txtDetailsSinopsis)
-            val releaseDate : TextView = findViewById(R.id.txtDateInDetails)
+        } else if (getTopRatedMovie != null) {
+            val txtTitle: TextView = findViewById(R.id.txtTitleDetails)
+            val txtDetailSinopsis: TextView = findViewById(R.id.txtDetailsSinopsis)
+            val releaseDate: TextView = findViewById(R.id.txtDateInDetails)
             val rating: TextView = findViewById(R.id.txtRatingInDetails)
-            val imgBackdrop : ImageView = findViewById(R.id.imgBackdrop)
-            val imgPoster : ImageView = findViewById(R.id.imgPoster)
-            val popularity : TextView = findViewById(R.id.numbersPopularity)
+            val imgBackdrop: ImageView = findViewById(R.id.imgBackdrop)
+            val imgPoster: ImageView = findViewById(R.id.imgPoster)
+            val popularity: TextView = findViewById(R.id.numbersPopularity)
 
             txtTitle.text = getTopRatedMovie.title
             txtDetailSinopsis.text = getTopRatedMovie.overview
@@ -117,15 +115,14 @@ class DetailsMovie : AppCompatActivity() {
             val path = buildPosterUpcoming(getTopRatedMovie.posterPath)
             Picasso.get().load(pathBackdrop).into(imgBackdrop)
             Picasso.get().load(path).into(imgPoster)
-        }
-        else if (getPopularMovie != null) {
-            val txtTitle : TextView = findViewById(R.id.txtTitleDetails)
-            val txtDetailSinopsis:TextView = findViewById(R.id.txtDetailsSinopsis)
-            val releaseDate : TextView = findViewById(R.id.txtDateInDetails)
+        } else if (getPopularMovie != null) {
+            val txtTitle: TextView = findViewById(R.id.txtTitleDetails)
+            val txtDetailSinopsis: TextView = findViewById(R.id.txtDetailsSinopsis)
+            val releaseDate: TextView = findViewById(R.id.txtDateInDetails)
             val rating: TextView = findViewById(R.id.txtRatingInDetails)
-            val imgBackdrop : ImageView = findViewById(R.id.imgBackdrop)
-            val imgPoster : ImageView = findViewById(R.id.imgPoster)
-            val popularity : TextView = findViewById(R.id.numbersPopularity)
+            val imgBackdrop: ImageView = findViewById(R.id.imgBackdrop)
+            val imgPoster: ImageView = findViewById(R.id.imgPoster)
+            val popularity: TextView = findViewById(R.id.numbersPopularity)
 
             txtTitle.text = getPopularMovie.title
             txtDetailSinopsis.text = getPopularMovie.overview
@@ -139,18 +136,10 @@ class DetailsMovie : AppCompatActivity() {
             Picasso.get().load(path).into(imgPoster)
         }
 
+
         btnFavorite.setOnClickListener {
 
-            if (firebaseAuth.currentUser == null) {
-                Toast.makeText(this, "Not Log In", Toast.LENGTH_SHORT).show()
-
-            } else {
-                if (isMyFav){
-                    removeFavorite()
-                } else {
-                    addFavorite()
-                }
-            }
+            checkFavorite()
 
         }
 
@@ -166,73 +155,153 @@ class DetailsMovie : AppCompatActivity() {
 
         val ref = FirebaseDatabase.getInstance().getReference("Users")
 
-        ref.child(firebaseAuth.uid!!).child("Favorite").child(movieNowPlaying)
-            .addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    isMyFav = snapshot.exists()
-                    if (isMyFav) {
-                        Log.d(TAG, "Available on favorite")
-                        val btnFavorite = findViewById<Button>(R.id.btnFavorite)
+        val getDataUpcomingMovie = intent.getParcelableExtra<UpcomingMovieResponse>("Upcoming")
+        val getDataNowPlayingMovie = intent.getParcelableExtra<MovieResponse>("Now Playing")
+        val getTopRatedMovie = intent.getParcelableExtra<MovieTopRatedResponse>("Top Rated")
+        val getPopularMovie = intent.getParcelableExtra<MoviePopularResponse>("Popular")
 
-                        btnFavorite.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.baseline_favorite_24, 0, 0)
-                        btnFavorite.text = "Remove Favorite"
-                    } else {
-                        Log.d(TAG, "Remove on favorite")
-                        val btnFavorite = findViewById<Button>(R.id.btnFavorite)
-
-                        btnFavorite.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.baseline_favorite_border_24, 0, 0)
-                        btnFavorite.text = "Add Favorite"
+        // Check each movie in its respective category
+        getDataNowPlayingMovie?.title?.let {
+            ref.child(firebaseAuth.uid!!).child("favorites").child("Now Playing").child(it)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            removeFavorite("Now Playing", it)
+                        } else {
+                            addFavorite("Now Playing", it)
+                        }
+                        updateFavoriteButton(snapshot.exists())
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
+                    override fun onCancelled(error: DatabaseError) {
 
-                }
-            })
+                    }
+                })
+        }
+        getTopRatedMovie?.title?.let {
+            ref.child(firebaseAuth.uid!!).child("favorites").child("Top Rated").child(it)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            removeFavorite("Top Rated", it)
+                        } else {
+                            addFavorite("Top Rated", it)
+                        }
+                        updateFavoriteButton(snapshot.exists())
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
+        }
+        getDataUpcomingMovie?.title?.let {
+            ref.child(firebaseAuth.uid!!).child("favorites").child("Upcoming").child(it)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            removeFavorite("Upcoming", it)
+                        } else {
+                            addFavorite("Upcoming", it)
+                        }
+                        updateFavoriteButton(snapshot.exists())
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
+        }
+        getPopularMovie?.title?.let {
+            ref.child(firebaseAuth.uid!!).child("favorites").child("Popular").child(it)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            removeFavorite("Popular", it)
+                        } else {
+                            addFavorite("Popular", it)
+                        }
+                        updateFavoriteButton(snapshot.exists())
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
+        }
     }
 
-    private fun addFavorite () {
+    private fun updateFavoriteButton(isFavorite: Boolean) {
+        val btnFavorite = findViewById<Button>(R.id.btnFavorite)
+
+        if (isFavorite) {
+            Log.d(TAG, "Available on favorite")
+            btnFavorite.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                0,
+                R.drawable.baseline_favorite_24,
+                0,
+                0
+            )
+            btnFavorite.text = "Remove Favorite"
+        } else {
+            Log.d(TAG, "Remove on favorite")
+            btnFavorite.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                0,
+                R.drawable.baseline_favorite_border_24,
+                0,
+                0
+            )
+            btnFavorite.text = "Add Favorite"
+        }
+    }
+
+    private fun addFavorite(category: String, title: String) {
         Log.d(TAG, "Add to favorite")
-        val timestamp = System.currentTimeMillis()
-
-        val hashMap = HashMap<String, Any>()
-        hashMap["Title Movie Now Playing"] = movieNowPlaying
-        hashMap["Title Movie Top Rated"] = movieTopRated
-        hashMap["Title Movie Upcoming"] = movieUpcoming
-        hashMap["Title Movie Popular"] = moviePopular
-
-        hashMap["Timestamp"] = timestamp
 
         val refDb = FirebaseDatabase.getInstance().getReference("Users")
-//        val ref = FirebaseFirestore.getInstance().getNamedQuery("Favorite")
-        refDb.child(firebaseAuth.uid!!).child("Favorite").child(movieNowPlaying)
-            .setValue(hashMap)
+
+        refDb.child(firebaseAuth.uid!!).child("favorites").child(category).child(title)
+            .setValue(true)
             .addOnSuccessListener {
                 Log.d(TAG, "Add too favorite")
-                Toast.makeText(this, "Succes add movie to favorite", Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(
+                    this,
+                    "Berhasil menambahkan Favorit pada Category $category",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            .addOnFailureListener {e ->
+            .addOnFailureListener { e ->
                 Log.d(TAG, "ADD to fav failed ${e.message}")
-                Toast.makeText(this, "Failed add movie to favorite ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Yahh gagal nicc ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-
-
     }
 
-    private fun removeFavorite() {
+    private fun removeFavorite(category: String, title: String) {
         Log.d(TAG, "Remove from favorite")
 
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-        ref.child(firebaseAuth.uid!!).child("Favorite").child(movieNowPlaying)
+        val refDb = FirebaseDatabase.getInstance().getReference("Users")
+
+        refDb.child(firebaseAuth.uid!!).child("favorites").child(category).child(title)
             .removeValue()
             .addOnSuccessListener {
                 Log.d(TAG, "Remove from favorite")
-                Toast.makeText(this, "Succes remove movie to favorite", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Berhasil menghapus pada Category $category",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            .addOnFailureListener {e ->
+            .addOnFailureListener { e ->
                 Log.d(TAG, "Remove from fav failed ${e.message}")
-                Toast.makeText(this, "Failed remove movie to favorite ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Yah gagal nicc ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
